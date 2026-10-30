@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=DM+Sans:wght@500;700&family=Noto+Nastaliq+Urdu:wght@700&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'Unbounded';font-weight:700;src:url('/home/claude/libs/node_modules/@fontsource/unbounded/files/unbounded-latin-700-normal.woff2')}
+@font-face{font-family:'Unbounded';font-weight:900;src:url('/home/claude/libs/node_modules/@fontsource/unbounded/files/unbounded-latin-900-normal.woff2')}
+@font-face{font-family:'DM Sans';font-weight:500;src:url('/home/claude/libs/node_modules/@fontsource/dm-sans/files/dm-sans-latin-500-normal.woff2')}
+@font-face{font-family:'DM Sans';font-weight:700;src:url('/home/claude/libs/node_modules/@fontsource/dm-sans/files/dm-sans-latin-700-normal.woff2')}
+</style>
+<script src="/home/claude/libs/node_modules/gsap/dist/gsap.min.js"></script>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:540px;height:960px;overflow:hidden;font-family:'DM Sans',sans-serif}
+#stage{position:relative;width:540px;height:960px;overflow:hidden;background:#FF7A45}
+.layer{position:absolute;inset:0}
+.disp{font-family:'Unbounded',sans-serif;font-weight:900;letter-spacing:-.02em;color:#fff;line-height:.95}
+.urdu{font-family:'Noto Nastaliq Urdu',serif;direction:rtl;color:#fff;line-height:2}
+#s1{display:flex;flex-direction:column;justify-content:center;padding:0 44px}
+#s1 .t45{font-size:136px}
+#s1 .q{font-size:40px;margin-top:20px;text-align:left}
+#s1 .en{font-size:22px;color:#FFE7B8;font-weight:700;margin-top:6px}
+#sun{position:absolute;width:600px;height:600px;right:-260px;top:-260px;border-radius:50%;background:radial-gradient(circle,#FFE08A 0%,#FFB21E 45%,rgba(255,178,30,0) 70%)}
+#bottleWrap{position:absolute;left:50%;top:150px;width:300px;height:620px;margin-left:-150px}
+#bottleWrap svg{width:100%;height:100%}
+#clock{position:absolute;left:0;right:0;top:56px;text-align:center;font-size:76px;opacity:0;color:#0A1A33}
+#cap{position:absolute;left:0;right:0;bottom:90px;text-align:center;font-size:30px;opacity:0;color:#0A1A33}
+#cap small{display:block;font-family:'DM Sans';font-weight:700;font-size:18px;letter-spacing:.14em;text-transform:uppercase;opacity:.75;margin-top:12px}
+#s4{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:0 44px;opacity:0}
+#s4 .big{font-size:80px}
+#s4 .big span{display:inline-block}
+#s4 .urdu{font-size:48px;margin-top:16px;align-self:flex-start}
+#s5{opacity:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0A1A33}
+#s5 .logo{font-size:60px;display:flex;align-items:center;gap:16px}
+#s5 .tag{font-size:26px;color:#7FE0FF;font-family:'DM Sans';font-weight:700;margin-top:14px}
+#lineup{display:flex;gap:26px;margin:46px 0 40px;height:300px}
+#lineup div{height:300px;width:130px}
+#lineup svg{height:100%;width:100%}
+.pill{background:#1FAF5A;color:#fff;font-weight:700;font-size:26px;padding:20px 34px;border-radius:999px;display:flex;align-items:center;gap:12px}
+.cod{color:#A9BCD6;font-weight:700;font-size:20px;margin-top:20px;letter-spacing:.06em}
+#fx{position:absolute;inset:0;pointer-events:none}
+#wipe{position:absolute;left:0;right:0;bottom:0;height:0;background:#22B8E8}
+</style></head>
+<body>
+<div id="stage">
+  <div id="sun"></div>
+  <div class="layer" id="s1">
+    <div class="disp t45" id="t45">45°C</div>
+    <div class="urdu q" id="q">آج کتنا پانی پیا؟</div>
+    <div class="en" id="en">How much water have you had today?</div>
+  </div>
+  <div id="wipe"></div>
+  <div class="layer" id="s2">
+    <div class="disp" id="clock">8:00 AM</div>
+    <div id="bottleWrap"></div>
+    <div class="disp" id="cap">Drink to the line.<small>Every line is a time</small></div>
+  </div>
+  <div class="layer" id="s4">
+    <div class="disp big" id="hg"><span>Har</span> <span>ghanta,</span><br><span>ek</span> <span style="color:#0A1A33">ghoont.</span></div>
+    <div class="urdu" id="hgU">ہر گھنٹہ، ایک گھونٹ</div>
+  </div>
+  <div class="layer" id="s5">
+    <div class="disp logo"><svg width="64" height="64" viewBox="0 0 26 26"><path d="M13 2C13 2 4 12 4 17a9 9 0 0 0 18 0C22 12 13 2 13 2Z" fill="#22B8E8"/></svg>GHOONT</div>
+    <div class="tag">The bottle that tells time</div>
+    <div id="lineup"><div id="l1"></div><div id="l2"></div><div id="l3"></div></div>
+    <div class="pill"><svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>Order on WhatsApp</div>
+    <div class="cod">CASH ON DELIVERY · ALL PAKISTAN</div>
+  </div>
+  <canvas id="fx" width="1080" height="1920"></canvas>
+</div>
+<script>
+const DAY=[["8 AM","Good morning"],["10 AM","Keep going"],["12 PM","Halfway soon"],["2 PM","Don't stop"],["4 PM","Almost there"],["6 PM","Last push"],["8 PM","Done!"]];
+function bottle(colour,labels=true,level=1){
+  const id='b'+Math.random().toString(36).slice(2);const top=118,bot=478;const y=top+(1-level)*(bot-top);let mk='';
+  if(labels)DAY.forEach((m,i)=>{const my=top+i*(bot-top)/6;mk+=`<g class="mk"><line x1="112" y1="${my}" x2="168" y2="${my}" stroke="#0A1A33" stroke-width="2.6" stroke-linecap="round"/><text x="166" y="${my-6}" text-anchor="end" font-family="Unbounded" font-weight="700" font-size="13" fill="#0A1A33">${m[0]}</text><text x="36" y="${my+4}" font-family="DM Sans" font-weight="700" font-size="11" fill="#0A1A33" opacity=".7">${m[1]}</text></g>`});
+  return `<svg viewBox="0 0 200 520" style="overflow:visible"><defs><clipPath id="${id}c"><rect x="24" y="96" width="152" height="408" rx="44"/></clipPath><linearGradient id="${id}g" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".18" stop-color="#fff" stop-opacity=".55"/><stop offset=".3" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+  <path d="M150 52 C 210 60 205 150 176 170" stroke="${colour}" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <rect x="62" y="20" width="76" height="52" rx="14" fill="${colour}"/><rect x="62" y="20" width="76" height="52" rx="14" fill="#000" opacity=".12"/><rect x="88" y="6" width="24" height="20" rx="6" fill="${colour}"/><rect x="54" y="66" width="92" height="30" rx="10" fill="${colour}"/>
+  <rect x="24" y="96" width="152" height="408" rx="44" fill="#fff" fill-opacity=".35" stroke="${colour}" stroke-width="5"/>
+  <g clip-path="url(#${id}c)"><g class="liq" transform="translate(0,${y})"><g class="wv"><path d="M-200 0 Q-150 -10 -100 0 T0 0 T100 0 T200 0 T300 0 T400 0 V600 H-200Z" fill="${colour}" opacity=".92"/></g><g class="wv2"><path d="M-200 6 Q-150 -4 -100 6 T0 6 T100 6 T200 6 T300 6 T400 6 V600 H-200Z" fill="${colour}" opacity=".5"/></g></g>${mk}</g>
+  <rect x="24" y="96" width="152" height="408" rx="44" fill="url(#${id}g)"/></svg>`;
+}
+document.getElementById('bottleWrap').innerHTML=bottle('#22B8E8');
+document.getElementById('l1').innerHTML=bottle('#22B8E8',false,.8);
+document.getElementById('l2').innerHTML=bottle('#FF6B4A',false,.8);
+document.getElementById('l3').innerHTML=bottle('#8B7CFF',false,.8);
+
+/* deterministic droplets: seeded bursts drawn analytically from time */
+let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647};
+const bursts=[];
+function burst(t0,x,y,n,sp=[300,700],spread=2.6,up=-Math.PI/2){for(let i=0;i<n;i++){const a=up+(rnd()-.5)*spread,v=sp[0]+rnd()*(sp[1]-sp[0]);bursts.push({t0,x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,r:4+rnd()*9,c:rnd()>.3?'#22B8E8':'#ffffff'})}}
+const cv=document.getElementById('fx'),ctx=cv.getContext('2d');ctx.scale(2,2);
+function drawFx(t){ctx.clearRect(0,0,540,960);for(const p of bursts){const d=t-p.t0;if(d<0||d>1.4)continue;const x=p.x+p.vx*d,y=p.y+p.vy*d+0.5*1500*d*d;const life=1-d/1.4;ctx.globalAlpha=life;const vy=p.vy+1500*d;const ang=Math.atan2(vy,p.vx);ctx.save();ctx.translate(x,y);ctx.rotate(ang);ctx.beginPath();ctx.ellipse(0,0,p.r*1.6,p.r,0,0,Math.PI*2);ctx.fillStyle=p.c;ctx.fill();ctx.restore()}ctx.globalAlpha=1}
+
+/* timeline (15 s) */
+const tl=gsap.timeline({paused:true});
+const liq=document.querySelector('#bottleWrap .liq'),mks=[...document.querySelectorAll('#bottleWrap .mk')];
+const st={p:0};
+const bg=document.getElementById('stage');
+// scene 1: heat
+tl.from('#sun',{scale:.3,opacity:0,duration:1.2,ease:'power2.out'},0)
+  .from('#t45',{yPercent:60,scale:1.6,opacity:0,duration:.5,ease:'back.out(2.2)'},.15)
+  .to('#t45',{x:'+=6',yoyo:true,repeat:5,duration:.05,ease:'none'},.65)
+  .from('#q',{y:40,opacity:0,duration:.5,ease:'power3.out'},.8)
+  .from('#en',{y:30,opacity:0,duration:.5,ease:'power3.out'},1.0)
+// wipe → water floods in
+  .to('#wipe',{height:'100%',duration:.6,ease:'power3.inOut'},2.4)
+  .set('#s1,#sun',{opacity:0},3.0)
+  .set(bg,{backgroundColor:'#22B8E8'},3.0)
+  .set('#wipe',{opacity:0},3.0)
+// scene 2: bottle drops in
+  .set('#bottleWrap',{y:-900,rotation:-20},0)
+  .to('#bottleWrap',{y:0,rotation:0,duration:.9,ease:'bounce.out'},3.0)
+  .add(()=>{},3.55)
+  .to('#clock',{opacity:1,duration:.3},3.6)
+  .to('#cap',{opacity:1,y:0,duration:.4},3.8)
+  .fromTo(bg,{backgroundColor:'#22B8E8'},{backgroundColor:'#CFEFFF',duration:.4,immediateRender:false},3.6)
+// day passes 4.4 → 9.0
+  .to(st,{p:1,duration:4.6,ease:'none',onUpdate(){
+      const p=st.p,h=8+p*12,H=Math.floor(h),M=Math.floor((h-H)*60/5)*5;
+      document.getElementById('clock').textContent=`${H%12||12}:${String(M).padStart(2,'0')} ${H<12?'AM':'PM'}`;
+      liq.setAttribute('transform',`translate(0,${118+p*360})`);
+      mks.forEach((m,i)=>m.querySelector('line').setAttribute('stroke',i/6<p-.001?'#1FAF5A':'#0A1A33'));
+    }},4.4)
+  .to(bg,{keyframes:[{backgroundColor:'#9EDDF7',duration:1.5},{backgroundColor:'#FFC27A',duration:1.6},{backgroundColor:'#FF8A5B',duration:1.5}]},4.4)
+  .to('#bottleWrap',{keyframes:[{rotation:-14,duration:.15},{rotation:0,duration:.6,ease:'elastic.out(1,.4)'}],repeat:5,repeatDelay:0},4.6)
+  .to('#cap',{opacity:0,duration:.3},8.8)
+  .to('#clock',{scale:1.15,duration:.2,yoyo:true,repeat:1},9.0)
+// scene 4: tagline
+  .to('#s2',{opacity:0,y:-60,duration:.4,ease:'power2.in'},9.5)
+  .to(bg,{backgroundColor:'#22B8E8',duration:.4},9.5)
+  .to('#s4',{opacity:1,duration:.01},9.9)
+  .from('#hg span',{yPercent:120,opacity:0,stagger:.12,duration:.5,ease:'back.out(2)'},9.9)
+  .from('#hgU',{opacity:0,y:30,duration:.5},10.6)
+// scene 5: end card
+  .to('#s5',{opacity:1,duration:.4},12.0)
+  .from('#s5 .logo',{scale:.6,opacity:0,duration:.6,ease:'back.out(2)'},12.1)
+  .from('#s5 .tag',{opacity:0,y:20,duration:.4},12.4)
+  .from('#lineup > div',{y:300,opacity:0,stagger:.12,duration:.7,ease:'back.out(1.6)'},12.4)
+  .from('.pill',{scale:.5,opacity:0,duration:.5,ease:'back.out(2.5)'},13.0)
+  .from('.cod',{opacity:0,duration:.4},13.3)
+  .to('.pill',{scale:1.06,yoyo:true,repeat:3,duration:.25},13.8)
+  .to({},{duration:.01},15);
+// drops
+burst(2.45,270,960,30,[600,1100],1.2);
+for(let i=0;i<6;i++) burst(4.6+i*0.77,270,168,10,[300,560],.9,-Math.PI*.58);
+burst(9.95,270,520,34,[400,900],3.0);
+burst(13.0,270,780,24,[400,800],2.4);
+
+window.seek=t=>{tl.seek(t,false);
+  document.getAnimations().forEach(a=>{a.pause();a.currentTime=t*1000});
+  drawFx(t)};
+const css=document.createElement('style');css.textContent='.wv{animation:w 2.4s linear infinite}.wv2{animation:w 3.6s linear infinite reverse}@keyframes w{to{transform:translateX(200px)}}';document.head.appendChild(css);
+</script>
+</body></html>
